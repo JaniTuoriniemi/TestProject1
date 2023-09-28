@@ -18,7 +18,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
     /// </summary>
 
-    public class CalculatorPageObject
+    public class SecondPageObject
 
     {
 
@@ -58,7 +58,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         public const int DefaultWaitInSeconds = 5;
 
-        public CalculatorPageObject(IWebDriver webDriver)
+        public SecondPageObject(IWebDriver webDriver)
 
         {
 
@@ -96,53 +96,30 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         private IWebElement SwishPhone => _webDriver.FindElement(By.Id("txtSwishMobileNumber"));
 
-        private IWebElement SwishAmount => _webDriver.FindElement(By.Id("Amount"));
-        private IWebElement SwishBookID => _webDriver.FindElement(By.Id("BookID"));
-
-        private IWebElement SwishAveragePrice => _webDriver.FindElement(By.Id("AveragePrice"));
-
-        private IWebElement SwishAveragePricePlusExtra => _webDriver.FindElement(By.Id("AveragePricePlusExtra"));
-        private IWebElement SwishPaymentReference => _webDriver.FindElement(By.Id("PaymentReference"));
-
-        private IWebElement SwishTestAmount => _webDriver.FindElement(By.Id("test-amount"));
-        private IWebElement SwishTestStatus => _webDriver.FindElement(By.Id("test-status"));
-        private IWebElement SwishTestCode => _webDriver.FindElement(By.Id("test-code"));
-        private IWebElement SwishTestTicket => _webDriver.FindElement(By.Id("test-ticket"));
-
-       public string GetValueSwishTestAmount()
-        {
-            string testAmount=SwishTestAmount.GetAttribute("value");
-            return testAmount;
-        }
-        public string GetValueSwishTestStatus()
-        {
-            string testStatus = SwishTestStatus.GetAttribute("value");
-            return testStatus;
-        }
-        public string GetValueSwishTestCode()
-        {
-            string testCode = SwishTestCode.GetAttribute("value");
-            return testCode;
-        }
-        public string GetValueSwishTestTicket()
-        {
-            string testTicket = SwishTestTicket.GetAttribute("value");
-            return testTicket;
-        }
-
         public void ClickNästaButtonLämna()
+
         {
+
             NästaButtonLämna.Click();
-            
+
         }
+
         public void Clicklogin()
+
         {
+
             Login.Click();
+
         }
+
         public void ClickTa_emot()
+
         {
+
             Ta_emot.Click();
+
         }
+
         public void ClickLoginButton()
 
         {
@@ -202,49 +179,9 @@ namespace CalculatorSelenium.Specs.PageObjects
             BetalaSwish.Click();
 
         }
-        public void StateSwishAmount(string amount)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", amount);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=amount;", SwishTestAmount);
-            //Clear text box
-           // SwishAmount.Clear();
-            //Enter text
-            //SwishAmount.SendKeys(amount);
-        }
-        public void StateSwishBookID(string bookID)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", bookID);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=bookID;", SwishTestAmount);
-           // SwishBookID.Clear();
-            //SwishBookID.SendKeys(bookID);
-        }
-        public void StateSwishAveragePrice(string averageprice)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", averageprice);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=averageprice;", SwishTestAmount);
-            //SwishAveragePrice.Clear();
-            //SwishAveragePrice.SendKeys(averageprice);
-        }
 
-        public void StateSwishAveragePricePlusExtra(string averagepriceplusextra)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", averagepriceplusextra);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=averagepriceplusextra;", SwishTestAmount);
-           // SwishAveragePricePlusExtra.Clear();
-           // SwishAveragePricePlusExtra.SendKeys(averagepriceplusextra);
-        }
-        public void StateSwishPaymentReference(string paymentreference)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", paymentreference);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=averagepriceplusextra;", SwishTestAmount);
-            //SwishPaymentReference.Clear();
-            //SwishPaymentReference.SendKeys(paymentreference);
-        }
+
+
         public void StatePhoneNumber(string number)
 
         {
@@ -378,9 +315,11 @@ namespace CalculatorSelenium.Specs.PageObjects
         public void GotoPage3()
 
         {
+
             _webDriver.Url = betala_swish;
+
         }
-       
+
         public void EnsureCalculatorIsOpenAndReset()
 
         {
@@ -484,5 +423,4 @@ namespace CalculatorSelenium.Specs.PageObjects
     }
 
 }  
-
 
