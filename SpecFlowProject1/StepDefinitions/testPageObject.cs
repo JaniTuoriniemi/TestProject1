@@ -1,7 +1,7 @@
 ﻿
 
 using System;
-
+using System.Security.Policy;
 using OpenQA.Selenium;
 
 using OpenQA.Selenium.Interactions;
@@ -97,7 +97,7 @@ namespace CalculatorSelenium.Specs.PageObjects
         private IWebElement SwishPhone => _webDriver.FindElement(By.Id("txtSwishMobileNumber"));
 
         private IWebElement SwishAmount => _webDriver.FindElement(By.Id("Amount"));
-        private IWebElement SwishBookID => _webDriver.FindElement(By.Id("BookID"));
+        private IWebElement SwishBookID => _webDriver.FindElement(By.Id("BookId"));
 
         private IWebElement SwishAveragePrice => _webDriver.FindElement(By.Id("AveragePrice"));
 
@@ -129,11 +129,14 @@ namespace CalculatorSelenium.Specs.PageObjects
             string testTicket = SwishTestTicket.GetAttribute("value");
             return testTicket;
         }
-
+        public string GetValueSwishPaymentReference() 
+        {
+        string filledSwishPaymentReference=SwishPaymentReference.GetAttribute("value");
+            return filledSwishPaymentReference;
+        }
         public void ClickNästaButtonLämna()
         {
-            NästaButtonLämna.Click();
-            
+            NästaButtonLämna.Click();  
         }
         public void Clicklogin()
         {
@@ -144,21 +147,13 @@ namespace CalculatorSelenium.Specs.PageObjects
             Ta_emot.Click();
         }
         public void ClickLoginButton()
-
         {
-
             LoginButton.Click();
-
         }
-
         public void ClickLogOutButton()
-
         {
-
             LogOutButton.Click();
-
         }
-
         //public bool ExistsTa_emot()
 
         //{
@@ -172,95 +167,59 @@ namespace CalculatorSelenium.Specs.PageObjects
         // }
 
         public void ClickNästaButton()
-
         {
-
             NästaButton.Click();
-
         }
-
         public void ClickLämmnaPåAddressButton()
-
         {
-
             LämmnaPåAddressButton.Click();
-
         }
-
         public void ClickLämmnaPåAddressNästaButton()
-
         {
-
             LämmnaPåAddressNästaButton.Click();
-
         }
-
         public void ClickBetalaSwish()
-
         {
-
             BetalaSwish.Click();
-
         }
         public void StateSwishAmount(string amount)
         {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", amount);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=amount;", SwishTestAmount);
+            //IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
+           // js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", amount);
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishAmount,amount);
             //Clear text box
            // SwishAmount.Clear();
             //Enter text
             //SwishAmount.SendKeys(amount);
         }
         public void StateSwishBookID(string bookID)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", bookID);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=bookID;", SwishTestAmount);
-           // SwishBookID.Clear();
-            //SwishBookID.SendKeys(bookID);
+        {   
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishBookID,bookID);
+           
         }
         public void StateSwishAveragePrice(string averageprice)
         {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", averageprice);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=averageprice;", SwishTestAmount);
-            //SwishAveragePrice.Clear();
-            //SwishAveragePrice.SendKeys(averageprice);
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishAveragePrice,averageprice);
+            
         }
-
         public void StateSwishAveragePricePlusExtra(string averagepriceplusextra)
-        {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", averagepriceplusextra);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=averagepriceplusextra;", SwishTestAmount);
-           // SwishAveragePricePlusExtra.Clear();
-           // SwishAveragePricePlusExtra.SendKeys(averagepriceplusextra);
+        { 
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishAveragePricePlusExtra,averagepriceplusextra);
+          
         }
         public void StateSwishPaymentReference(string paymentreference)
         {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)_webDriver;
-            js.ExecuteScript("var myVar = arguments[0]; console.log(myVar);", paymentreference);
-            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=averagepriceplusextra;", SwishTestAmount);
-            //SwishPaymentReference.Clear();
-            //SwishPaymentReference.SendKeys(paymentreference);
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishPaymentReference,paymentreference);
+            
         }
         public void StatePhoneNumber(string number)
-
         {
-
             //Clear text box
-
             Telephone_input.Clear();
-
             //Enter text
-
             Telephone_input.SendKeys(number);
-
         }
-
         public void MoveSlider()
-
         {
 
             Actions action = new Actions(_webDriver);
@@ -360,27 +319,24 @@ namespace CalculatorSelenium.Specs.PageObjects
         public void GotoPage1()
 
         {
-
             //Open the page for the first test
-
             _webDriver.Url = reink_code;
-
         }
-
         public void GotoPage2()
-
         {
-
             _webDriver.Url = är_klar;
-
         }
-
         public void GotoPage3()
 
         {
             _webDriver.Url = betala_swish;
         }
-       
+        public void GotoPage4(string bookQRcode)
+        {
+            string page = "https://reink.se/auth/login?ReturnUrl=%2Fbook%2Fleave-book-to-friend%3Fcode%3D"+bookQRcode;
+            _webDriver.Url = page;
+           // _webDriver.Url = lämna_boken_till_en_vän;
+        }
         public void EnsureCalculatorIsOpenAndReset()
 
         {
