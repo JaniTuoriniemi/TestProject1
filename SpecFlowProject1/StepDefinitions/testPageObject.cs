@@ -1,13 +1,14 @@
 ﻿
 
 using System;
+using System.Drawing.Printing;
 using System.Security.Policy;
 using OpenQA.Selenium;
 
 using OpenQA.Selenium.Interactions;
 
 using OpenQA.Selenium.Support.UI;
-
+using Newtonsoft.Json;
 namespace CalculatorSelenium.Specs.PageObjects
 
 {
@@ -27,7 +28,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
 
         //The URLs involved in the tests
-
+        string reink_login = "https://reink.se/auth/login";
         string reink_start = "https://reink.se/";
 
         string reink_code = "https://reink.se/book/register-qr?QrCode=eebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd";
@@ -94,10 +95,15 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         private IWebElement NästaButtonLämna => _webDriver.FindElement(By.XPath("//*[text()='Nästa']"));
 
+        private IWebElement NästaButtonLämna2 => _webDriver.FindElement(By.XPath("//*[contains(text(),'Nästa')]"));
+
+        private IWebElement Bookregistered => _webDriver.FindElement(By.XPath("//*[text()='Bok Registrerad']"));
         private IWebElement SwishPhone => _webDriver.FindElement(By.Id("txtSwishMobileNumber"));
 
         private IWebElement SwishAmount => _webDriver.FindElement(By.Id("Amount"));
         private IWebElement SwishBookID => _webDriver.FindElement(By.Id("BookId"));
+
+        private IWebElement AvslutaButton => _webDriver.FindElement(By.XPath("//*[text()='avsluta']"));
 
         private IWebElement SwishAveragePrice => _webDriver.FindElement(By.Id("AveragePrice"));
 
@@ -134,9 +140,29 @@ namespace CalculatorSelenium.Specs.PageObjects
         string filledSwishPaymentReference=SwishPaymentReference.GetAttribute("value");
             return filledSwishPaymentReference;
         }
+
+        public bool VerifyBookregistered()
+        {
+            bool result;
+            try
+            {
+                _webDriver.FindElement(By.XPath("//*[text()='Bok Registrerad']"));
+                result = true;
+            }
+            catch (NoSuchElementException)
+            {
+                result= false;
+            }
+            return result;
+        }
+
         public void ClickNästaButtonLämna()
         {
             NästaButtonLämna.Click();  
+        }
+        public void ClickNästaButtonLämna2()
+        {
+            NästaButtonLämna2.Click();
         }
         public void Clicklogin()
         {
@@ -169,6 +195,10 @@ namespace CalculatorSelenium.Specs.PageObjects
         public void ClickNästaButton()
         {
             NästaButton.Click();
+        }
+        public void ClickAvslutaButton()
+        {
+            AvslutaButton.Click();
         }
         public void ClickLämmnaPåAddressButton()
         {
@@ -212,6 +242,29 @@ namespace CalculatorSelenium.Specs.PageObjects
             ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishPaymentReference,paymentreference);
             
         }
+        public void StateSwishTestAmount(string amount)
+        {
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishTestAmount, amount);
+        }
+        public void StateSwishTestStatus(string teststatus)
+        {
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishTestStatus, teststatus);
+        }
+        public void StateSwishTestCode(string testcode)
+        {
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishTestCode, testcode);
+        }
+        public void StateSwishTestTicket(string testticket)
+        {
+            ((IJavaScriptExecutor)_webDriver).ExecuteScript("arguments[0].value=arguments[1];", SwishTestTicket, testticket);
+        }
+
+        public string GetSource()
+        {
+            string source = _webDriver.PageSource;
+            return source;
+        }
+
         public void StatePhoneNumber(string number)
         {
             //Clear text box
@@ -337,6 +390,42 @@ namespace CalculatorSelenium.Specs.PageObjects
             _webDriver.Url = page;
            // _webDriver.Url = lämna_boken_till_en_vän;
         }
+        public void GotoPage5()
+        {
+            _webDriver.Url = reink_login;
+        }
+        public void GotoPage6(string bookQRcode)
+        {
+            string page = "https://reink.se/book/register-qr?QrCode="+bookQRcode;
+            _webDriver.Url = page;
+            // _webDriver.Url = lämna_boken_till_en_vän;
+        }
+        public void GotoPage7()
+        {
+            _webDriver.Url = bok_registrerad;
+        }
+        public void GotoPage8(string bookID)
+        {
+            _webDriver.Url="https://reink.se/book/leave-book?BookId="+bookID;
+         }
+       public object  ExtractJsonObject(string pagesource)
+            {
+                for (var i = pagesource.IndexOf('{'); i > -1; i = pagesource.IndexOf('{', i + 1))
+                {
+                    for (var j = pagesource.LastIndexOf('}'); j > -1; j = pagesource.LastIndexOf("}", j - 1))
+                    {
+                        var jsonProbe = pagesource.Substring(i, j - i + 1);
+                        try
+                        {
+                            return JsonConvert.DeserializeObject(jsonProbe);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+                return null;
+            }
         public void EnsureCalculatorIsOpenAndReset()
 
         {

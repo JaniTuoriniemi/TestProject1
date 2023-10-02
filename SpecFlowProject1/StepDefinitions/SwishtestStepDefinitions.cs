@@ -2,6 +2,7 @@ using CalculatorSelenium.Specs.Drivers;
 using CalculatorSelenium.Specs.PageObjects;
 using System;
 using TechTalk.SpecFlow;
+using Newtonsoft.Json;
 
 namespace SpecFlowProject1.StepDefinitions
 {
@@ -56,13 +57,13 @@ namespace SpecFlowProject1.StepDefinitions
             //The hidden form is filled in
             _calculatorPageObject.StateSwishAmount(amount);
             _calculatorPageObject.StateSwishBookID(bookID);
-            _calculatorPageObject.StateSwishAveragePrice(averagePrice);
-            _calculatorPageObject.StateSwishAveragePricePlusExtra(averagePricePlusExtra);
+            //_calculatorPageObject.StateSwishAveragePrice(averagePrice);
+            //_calculatorPageObject.StateSwishAveragePricePlusExtra(averagePricePlusExtra);
            //Uncomment the line below if you want to also set the paymentreference number"
             // _calculatorPageObject.StateSwishPaymentReference(paymentReference);
 
             // Gets the prefilled or user stated payment reference number
-             filledSwishPaymentReference= _calculatorPageObject.GetValueSwishPaymentReference();
+            // filledSwishPaymentReference= _calculatorPageObject.GetValueSwishPaymentReference();
             //The phone number is filled in (Altough is hould already be autofilled) an the "Betala" is clicked.
             _calculatorPageObject.StateSwishnumber("+46"+phonenumber);
             _calculatorPageObject.ClickBetalaSwish();
@@ -70,26 +71,46 @@ namespace SpecFlowProject1.StepDefinitions
 
         [Then(@"The test form is read on the swish confirmation page")]
         public void ThenTheTestFormIsReadOnTheSwishConfirmationPage()
-        { // The values in the hidden form on the payment confirmation page are verified
-           string testamount= _calculatorPageObject.GetValueSwishTestAmount();
+        {
+            _calculatorPageObject.ClickAvslutaButton();
+            // The values in the hidden form on the payment confirmation page are verified
+          // string testamount= _calculatorPageObject.GetValueSwishTestAmount();
             string teststatus = _calculatorPageObject.GetValueSwishTestStatus();
-            string testcode = _calculatorPageObject.GetValueSwishTestCode();
+           string testcode = _calculatorPageObject.GetValueSwishTestCode();
             string testticket = _calculatorPageObject.GetValueSwishTestTicket();
+            _calculatorPageObject.StateSwishTestAmount(amount);
+            string pagesource = _calculatorPageObject.GetSource();
+             
+            dynamic jsonPage = _calculatorPageObject.ExtractJsonObject(pagesource);
             int controlnumber = 0;
-            if (testamount == "4")
-            { controlnumber=controlnumber+1; }
-            if (teststatus == "PAID")
+            if (jsonPage.amount == amount) 
             { controlnumber = controlnumber + 1; }
-            if (testcode == "enter code")
+            if (jsonPage.teststatus == teststatus) 
             { controlnumber = controlnumber + 1; }
-            if (testticket == filledSwishPaymentReference.ToLower() )
+            if (jsonPage.testticket == testticket) 
+            { controlnumber = controlnumber + 1; }
+            if (jsonPage.testcode == testcode) 
             { controlnumber = controlnumber + 1; }
             int actualResult = controlnumber;
-            actualResult.Should().Be(4);//If the hidden test form is filled in as expected the control sum should be 4.
-                                        //  "203e782c967d4350a21a4d3e5538e469"
-                                        // "3af9e317b9e54b5abf481f85e8a96d45"
-                                        //457643B8C6E044049B4C73F3CA303F68
-           // 457643b8c6e044049b4c73f3ca303f68
+            actualResult.Should().Be(4);
+
+            //{ controlnumber=controlnumber+1; }
+
+            //int controlnumber = 0;
+            //if (testamount == "4")
+            //{ controlnumber=controlnumber+1; }
+            // if (teststatus == "PAID")
+            //{ controlnumber = controlnumber + 1; }
+            //if (testcode == "enter code")
+            // { controlnumber = controlnumber + 1; }
+            //if (testticket == filledSwishPaymentReference.ToLower() )
+            //{ controlnumber = controlnumber + 1; }
+            //int actualResult = controlnumber;
+            //actualResult.Should().Be(4);//If the hidden test form is filled in as expected the control sum should be 4.
+            //  "203e782c967d4350a21a4d3e5538e469"
+            // "3af9e317b9e54b5abf481f85e8a96d45"
+            //457643B8C6E044049B4C73F3CA303F68
+            // 457643b8c6e044049b4c73f3ca303f68
         }
     }
 }
