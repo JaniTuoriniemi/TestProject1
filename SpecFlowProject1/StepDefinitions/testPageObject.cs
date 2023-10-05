@@ -135,7 +135,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         private IWebElement Ingetkonto => _webDriver.FindElement(By.LinkText("Inget konto? Registrera dig"));
 
-        private IWebElement VerifieraButton1 => _webDriver.FindElement(By.Id("SubmitBtn"));
+        private IWebElement VerifieraButton1 => _webDriver.FindElement(By.Id("submitBtn"));
 
         private IWebElement CheckBox => _webDriver.FindElement(By.Id("rememberme"));
 
@@ -147,14 +147,19 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         private IWebElement VerifikationsNr4 => _webDriver.FindElement(By.Id("OTP4"));
 
-        private IWebElement VerifieraButton2 => _webDriver.FindElement(By.Id("SubmitBtn"));
+        //private IWebElement VerifieraButton2 => _webDriver.FindElement(By.Id("SubmitBtn"));
 
         private IWebElement Passwordbox => _webDriver.FindElement(By.Id("Password"));
 
         private IWebElement ConfirmPasswordbox => _webDriver.FindElement(By.Id("ConfirmPassword"));
 
-        private IWebElement SavePassword => _webDriver.FindElement(By.Id("SubmitBtn"));
+        // private IWebElement SavePassword => _webDriver.FindElement(By.Id("SubmitBtn"));
 
+        private IWebElement MittKonto => _webDriver.FindElement(By.LinkText("/account/myprofile"));
+       // private IWebElement TaBortKonto => _webDriver.FindElement(By.LinkText("/account/delete-account"));
+
+        private IWebElement BekräftaTaBortKonto => _webDriver.FindElement(By.XPath("//*[text()='Ta bort']"));
+        private IWebElement LoginElement => _webDriver.FindElement(By.ClassName("logg"));
         public string GetValueSwishTestAmount()
 
         {
@@ -206,19 +211,12 @@ namespace CalculatorSelenium.Specs.PageObjects
         }
 
         public bool VerifyBookregistered()
-
         {
-
             bool result;
-
             try
-
             {
-
                 _webDriver.FindElement(By.XPath("//*[text()='Bok Registrerad']"));
-
                 result = true;
-
             }
 
             catch (NoSuchElementException)
@@ -232,31 +230,30 @@ namespace CalculatorSelenium.Specs.PageObjects
             return result;
 
         }
-
+        public void ClickBekräftaTaBortKonto()
+        {
+            BekräftaTaBortKonto.Click();
+        }
+        public void ClickTaBortKonto()
+        {
+            BekräftaTaBortKonto.Click();
+        }
+        public void ClickMittKonto()
+        {
+            MittKonto.Click();
+        }
         public void ClickNästaButtonLämna()
-
         {
-
             NästaButtonLämna.Click();
-
         }
-
         public void ClickNästaButtonLämna2()
-
         {
-
             NästaButtonLämna2.Click();
-
         }
-
         public void Clicklogin()
-
         {
-
             Login.Click();
-
         }
-
         public void ClickTa_emot()
 
         {
@@ -281,6 +278,19 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         }
 
+        public bool ExistsLogin()
+
+        {try
+            {
+                _webDriver.FindElement(By.ClassName("logg"));
+                return true;
+
+            }
+            catch { return false; }
+          
+        }
+
+
         //public bool ExistsTa_emot()
 
         //{
@@ -294,7 +304,7 @@ namespace CalculatorSelenium.Specs.PageObjects
         // }
         public void ClickSavepassword()
         { 
-        SavePassword.Click();
+        VerifieraButton1.Click();
         }
         public void ClickIngetKonto()
         {
@@ -308,7 +318,7 @@ namespace CalculatorSelenium.Specs.PageObjects
         }
         public void ClickVerifiera2()
         {
-            VerifieraButton2.Click();
+            VerifieraButton1.Click();
         }
         public void ClickNästaButton()
         {
@@ -626,19 +636,17 @@ namespace CalculatorSelenium.Specs.PageObjects
         public void GotoPage7()
 
         {
-
             _webDriver.Url = bok_registrerad;
-
         }
-
         public void GotoPage8(string bookID)
 
         {
-
             _webDriver.Url = $"{reink_start}/book/leave-book?BookId=" + bookID;
-
         }
-
+        public void GotoPage9()
+        {
+            _webDriver.Url = $"{reink_start}/account/register"; 
+        }
         public object ExtractJsonObject(string pagesource)
 
         {
