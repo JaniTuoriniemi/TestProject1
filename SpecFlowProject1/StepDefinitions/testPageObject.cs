@@ -49,7 +49,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         string bok_registrerad = $"{reink_start}/book/book-registered";
 
-        string är_klar = $"{reink_start}/book/leave-book?BookId=6c6d0395-c667-4bf9-b5f5-0d13ca706b27";
+        string är_klar = $"{reink_start}/book/leave-book?BookId=";
 
         string lämna_boken_till_en_vän = $"{reink_start}/auth/login?ReturnUrl=%2Fbook%2Fleave-book-to-friend%3Fcode%3Deebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd";
 
@@ -93,7 +93,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         private IWebElement LogOutButton => _webDriver.FindElement(By.PartialLinkText("/auth/logout"));
 
-        private IWebElement NästaButton => _webDriver.FindElement(By.LinkText("/book/leave-book-to-friend?code=eebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd"));
+        private IWebElement NästaButton => _webDriver.FindElement(By.XPath("//*[text()='Nästa']"));
 
         private IWebElement LämmnaPåAddressButton => _webDriver.FindElement(By.Id("bok-address"));
 
@@ -160,6 +160,7 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         private IWebElement BekräftaTaBortKonto => _webDriver.FindElement(By.XPath("//*[text()='Ta bort']"));
         private IWebElement LoginElement => _webDriver.FindElement(By.ClassName("logg"));
+        private IWebElement LogoutElement => _webDriver.FindElement(By.XPath("//*[text()='Logga Ut']"));
         public string GetValueSwishTestAmount()
 
         {
@@ -230,6 +231,8 @@ namespace CalculatorSelenium.Specs.PageObjects
             return result;
 
         }
+        public void ClickLogoutElement()
+        { LogoutElement.Click(); }
         public void ClickBekräftaTaBortKonto()
         {
             BekräftaTaBortKonto.Click();
@@ -585,12 +588,9 @@ namespace CalculatorSelenium.Specs.PageObjects
 
         }
 
-        public void GotoPage2()
-
+        public void GotoPage2(string bookID)
         {
-
-            _webDriver.Url = är_klar;
-
+            _webDriver.Url = är_klar+bookID;
         }
 
         public void GotoPage3()
@@ -647,6 +647,9 @@ namespace CalculatorSelenium.Specs.PageObjects
         {
             _webDriver.Url = $"{reink_start}/account/register"; 
         }
+        public void GotoPage10()
+        { _webDriver.Url = $"{reink_start}"; }
+
         public object ExtractJsonObject(string pagesource)
 
         {

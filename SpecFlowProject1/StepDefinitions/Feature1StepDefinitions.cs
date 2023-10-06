@@ -74,7 +74,8 @@ namespace SpecFlowProject1.StepDefinitions
         [Given(@"The browser is on the Ta emot page")]
         public void GivenTheBrowserIsOnTheTaEmotPage()
         {
-            _calculatorPageObject.GotoPage2();
+            string bookID = "EE";
+            _calculatorPageObject.GotoPage2(bookID);
 
             _calculatorPageObject.ClickLämmnaPåAddressButton();
         }
@@ -106,7 +107,8 @@ namespace SpecFlowProject1.StepDefinitions
         [Given(@"Nästa is clicked and the browser is taken to login screen")]
         public void GivenNastaIsClickedAndTheBrowserIsTakenToLoginScreen()
         {
-            _calculatorPageObject.GotoPage2();
+            string bookID = "EE";
+            _calculatorPageObject.GotoPage2(bookID);
 
             _calculatorPageObject.ClickNästaButtonLämna();
         }
