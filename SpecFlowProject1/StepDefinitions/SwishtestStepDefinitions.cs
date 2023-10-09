@@ -43,13 +43,14 @@ namespace SpecFlowProject1.StepDefinitions
         // The PageObject that inteacts with the webpages. It is located in testPageObject.cs
 
         public CalculatorPageObject _calculatorPageObject;
-
+        SwishtestStepDefinitions(BrowserDriverEdge browserDriverEdge)
         //public SwishtestStepDefinitions(BrowserDriver browserDriver)
         //{
-            SwishtestStepDefinitions(BrowserDriverMozilla browserDriverMozilla)
-        { 
+        //SwishtestStepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        {
+            _calculatorPageObject = new CalculatorPageObject(browserDriverEdge.Current);
                // _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
-            _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+               // _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
             browsertype = "mozilla";
             //browsertype = "chrome";
             // The tester should modify the parameters below to suit the test.

@@ -25,17 +25,4 @@
     <Folder Include="Drivers\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Features\Featurenewtry.feature.cs">
-      <DependentUpon>Featurenewtry.feature</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <SpecFlowFeatureFiles Update="Features\Featurenewtry.feature">
-      <Visible>$(UsingMicrosoftNETSdk)</Visible>
-      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
-    </SpecFlowFeatureFiles>
-  </ItemGroup>
-
 </Project>

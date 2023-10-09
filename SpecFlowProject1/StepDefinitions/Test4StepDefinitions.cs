@@ -21,14 +21,16 @@ namespace SpecFlowProject1.StepDefinitions
         public string paymentReference;
         public string bookQRcode;
         public CalculatorPageObject _calculatorPageObject;
-       // public Test4StepDefinitions(BrowserDriver browserDriver)
-        public Test4StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
-        {
-            //_calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
-            _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+        public Test4StepDefinitions(BrowserDriverEdge browserDriverEdge)
+        // public Test4StepDefinitions(BrowserDriver browserDriver)
+       // public Test4StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        { 
+        _calculatorPageObject = new CalculatorPageObject(browserDriverEdge.Current);
+        //_calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
+        //_calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
             startPage = _calculatorPageObject.GiveStart();
             password = "Koopa11Kiipa";//User password
-            phonenumber = "730722981";//User phone
+            phonenumber = "730727581";//User phone
             bookQRcode = "79B113F8-DA26-43F6-800C-F17C731F02AF";
             amount = "1";
             bookID = "033b655c-33cf-4175-b3f0-08db638c642c"; //The book QR code number  

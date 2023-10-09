@@ -21,12 +21,14 @@ namespace SpecFlowProject1.StepDefinitions
         public string paymentReference;
         public string bookQRcode;
         public CalculatorPageObject _calculatorPageObject;
-       // public Test6StepDefinitions(BrowserDriver browserDriver)
-        public Test6StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        public Test6StepDefinitions(BrowserDriverEdge browserDriverEdge)
+        // public Test6StepDefinitions(BrowserDriver browserDriver)
+        //public Test6StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
         {
-           // _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
+            // _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
             //browsertype = "chrome";
-            _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+            _calculatorPageObject = new CalculatorPageObject(browserDriverEdge.Current);
+            //_calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
             browsertype = "mozilla";
             startPage = _calculatorPageObject.GiveStart();
             password = "Koopa11Kiipa";//User password

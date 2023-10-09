@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Interactions;
 
 namespace CalculatorSelenium.Specs.Drivers
@@ -107,4 +108,56 @@ namespace CalculatorSelenium.Specs.Drivers
                 _isDisposed = true;
             }
         }
+    public class BrowserDriverEdge// : IDisposable// Comment away IDisposable to not close browser after test
+    {
+        private readonly Lazy<IWebDriver> _currentWebDriverLazy;
+        private bool _isDisposed;
+
+        public BrowserDriverEdge()
+        {
+            _currentWebDriverLazy = new Lazy<IWebDriver>(CreateWebDriver);
+
+        }
+        /// <summary>
+        /// The Selenium IWebDriver instance
+        /// </summary>
+        public IWebDriver Current => _currentWebDriverLazy.Value;
+
+        /// <summary>
+        /// Creates the Selenium web driver (opens a browser)
+        /// </summary>
+        /// <returns></returns>
+        private IWebDriver CreateWebDriver()
+        {
+            //We use the Mozilla browser
+            var edgeDriverService = EdgeDriverService.CreateDefaultService();
+
+            var edgeOptions = new EdgeOptions();
+           // edgeOptions.AddArgument("--headless=new");//Comment away this line to make browser visible
+            var edgeDriver = new EdgeDriver(edgeDriverService, edgeOptions);
+
+            return edgeDriver;
+
+        }
+        /// <summary>
+        /// Disposes the Selenium web driver (closing the browser) after the Scenario completed
+        /// </summary>
+        public void Dispose()
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (_currentWebDriverLazy.IsValueCreated)
+            {
+                Current.Quit();
+            }
+
+            _isDisposed = true;
+        }
     }
+
+
+
+}

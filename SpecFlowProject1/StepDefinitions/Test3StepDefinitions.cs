@@ -40,13 +40,14 @@ namespace SpecFlowProject1.StepDefinitions
         public string bookQRcode;
 
         public CalculatorPageObject _calculatorPageObject;
-
+        public Test3StepDefinitions(BrowserDriverEdge browserDriverEdge)
        // public Test3StepDefinitions(BrowserDriver browserDriver)
-        public Test3StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        //public Test3StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
         {
 
            // _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
-             _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+            /// _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+            _calculatorPageObject = new CalculatorPageObject(browserDriverEdge.Current);
             //browsertype = "chrome";
             browsertype = "mozilla";
             password = "Koopa11Kiipa";//User password

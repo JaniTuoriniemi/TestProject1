@@ -19,12 +19,13 @@ namespace SpecFlowProject1.StepDefinitions
         public string bookID;
         public string bookQRcode;
         public CalculatorPageObject _calculatorPageObject;
-
-      //  public Test1_SammanslagenStepDefinitions(BrowserDriver browserDriver)
- public Test1_SammanslagenStepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        Test1_SammanslagenStepDefinitions(BrowserDriverEdge browserDriverEdge)
+        //  public Test1_SammanslagenStepDefinitions(BrowserDriver browserDriver)
+        //public Test1_SammanslagenStepDefinitions(BrowserDriverMozilla browserDriverMozilla)
         {
+            _calculatorPageObject = new CalculatorPageObject(browserDriverEdge.Current);
             //  _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
-            _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+            //_calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
             startPage = _calculatorPageObject.GiveStart();
             password = "Koopa11Kiipa";//User password
             phonenumber = "735458020";//User phone
