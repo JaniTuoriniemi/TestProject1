@@ -13,6 +13,7 @@ using OpenQA.Selenium.Support.UI;
 using Newtonsoft.Json;
 
 using System.Collections.Generic;
+using OpenQA.Selenium.Remote;
 
 namespace CalculatorSelenium.Specs.PageObjects
 
@@ -42,7 +43,8 @@ namespace CalculatorSelenium.Specs.PageObjects
         // const string reink_start = "http://localhost:5510";
 
         string reink_code = $"{reink_start}/book/register-qr?QrCode=eebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd";
-
+        string bok_upptagen = $"{reink_start}/book/unavailave-book?Id=";
+        
         string logga_in_code = $"{reink_start}/auth/login?ReturnUrl=%2Fbook%2Fcode-access%3Fcode%3Deebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd";
 
         string registrera_bok = $"{reink_start}/book/register-qr?QrCode=eebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd";
@@ -164,13 +166,10 @@ namespace CalculatorSelenium.Specs.PageObjects
         public string GetValueSwishTestAmount()
 
         {
-
             string testAmount = SwishTestAmount.GetAttribute("value");
-
             return testAmount;
-
         }
-
+        
         public string GetValueSwishTestStatus()
 
         {
@@ -260,27 +259,17 @@ namespace CalculatorSelenium.Specs.PageObjects
         public void ClickTa_emot()
 
         {
-
             Ta_emot.Click();
-
         }
-
         public void ClickLoginButton()
-
         {
-
             LoginButton.Click();
-
         }
 
         public void ClickLogOutButton()
-
         {
-
             LogOutButton.Click();
-
         }
-
         public bool ExistsLogin()
 
         {try

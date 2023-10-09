@@ -8,6 +8,7 @@ namespace SpecFlowProject1.StepDefinitions
     [Binding]
     public class TestSequence2StepDefinitions
     {
+        public string browsertype;
         public string filledSwishPaymentReference;
         public string password;
         public string phonenumber;
@@ -20,11 +21,13 @@ namespace SpecFlowProject1.StepDefinitions
         public string paymentReference;
         public string bookQRcode;
         public CalculatorPageObject _calculatorPageObject;
-        public TestSequence2StepDefinitions(BrowserDriver browserDriver)
-        //public TestSequence2StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        //public TestSequence2StepDefinitions(BrowserDriver browserDriver)
+        public TestSequence2StepDefinitions(BrowserDriverMozilla browserDriverMozilla)
         {
-            _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
-            //_calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+           // _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
+            _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+            browsertype = "mozilla";
+          //  browsertype = "chrome";
             startPage = _calculatorPageObject.GiveStart();
             password = "Koopa11Kiipa";//User password
             phonenumber = "730622401";//User phone
@@ -147,7 +150,6 @@ namespace SpecFlowProject1.StepDefinitions
         [Given(@"The browser moves to the the swish payment page")]
         public void GivenTheBrowserMovesToTheTheSwishPaymentPage()
         {
-
             {
                 if ($"{startPage}/account/payment-swish?BookId="+bookID != _calculatorPageObject.CurrentURL())
                 { _calculatorPageObject.GotoPage4(bookQRcode);
@@ -171,22 +173,17 @@ namespace SpecFlowProject1.StepDefinitions
 
             _calculatorPageObject.StateSwishBookID(bookID);
 
-            //_calculatorPageObject.StateSwishAveragePrice(averagePrice);
-
+            //_calculatorPageObject.StateSwishAveragePrice(averagePrice)
             //_calculatorPageObject.StateSwishAveragePricePlusExtra(averagePricePlusExtra);
-
             //Uncomment the line below if you want to also set the paymentreference number"
-
             // _calculatorPageObject.StateSwishPaymentReference(paymentReference);
-
             // Gets the prefilled or user stated payment reference number
-
             // filledSwishPaymentReference= _calculatorPageObject.GetValueSwishPaymentReference();
-
             //The phone number is filled in (Altough is hould already be autofilled) an the "Betala" is clicked.
-
-            _calculatorPageObject.StateSwishnumber("+46" + phonenumber);
-
+            if (browsertype == "mozilla")
+            { _calculatorPageObject.StateSwishnumber("46" + phonenumber); }
+            else { _calculatorPageObject.StateSwishnumber("+46" + phonenumber); }
+            
             _calculatorPageObject.ClickBetalaSwish();
         }
 
@@ -199,29 +196,17 @@ namespace SpecFlowProject1.StepDefinitions
             // string testamount= _calculatorPageObject.GetValueSwishTestAmount();
 
             string teststatus = _calculatorPageObject.GetValueSwishTestStatus();
-
             string testcode = _calculatorPageObject.GetValueSwishTestCode();
-
             string testticket = _calculatorPageObject.GetValueSwishTestTicket();
-
             _calculatorPageObject.StateSwishTestAmount(amount);
-
             _calculatorPageObject.ClickAvslutaButton();
-
             string pagesource = _calculatorPageObject.GetSource();
-
             dynamic jsonPage = _calculatorPageObject.ExtractJsonObject(pagesource);
-
             int controlnumber = 0;
-
             if (jsonPage.amount == amount)
-
             { controlnumber = controlnumber + 1; }
-
             if (jsonPage.status == teststatus)
-
             { controlnumber = controlnumber + 1; }
-
             //if (jsonPage.payeePaymentReference == "61a7754f65f64c5c9b13a06dbb8980b7" ) 
 
             //{ controlnumber = controlnumber + 1; }
@@ -309,28 +294,20 @@ namespace SpecFlowProject1.StepDefinitions
         public void WhenTheHiddenTestFormIsFilledAndAvslutaIsClicked()
         {
             _calculatorPageObject.MoveSlider();// Moves the priceslider to 1 kr
-
             //The hidden form is filled in
-
             _calculatorPageObject.StateSwishAmount(amount);
-
             _calculatorPageObject.StateSwishBookID(bookID);
-
-            //_calculatorPageObject.StateSwishAveragePrice(averagePrice);
-
+            //_calculatorPageObject.StateSwishAveragePrice(averagePrice)
             //_calculatorPageObject.StateSwishAveragePricePlusExtra(averagePricePlusExtra);
-
             //Uncomment the line below if you want to also set the paymentreference number"
-
             // _calculatorPageObject.StateSwishPaymentReference(paymentReference);
-
             // Gets the prefilled or user stated payment reference number
-
             // filledSwishPaymentReference= _calculatorPageObject.GetValueSwishPaymentReference();
-
             //The phone number is filled in (Altough is hould already be autofilled) an the "Betala" is clicked.
-
-            _calculatorPageObject.StateSwishnumber("+46" + phonenumber);
+            if (browsertype == "mozilla")
+            { _calculatorPageObject.StateSwishnumber("46" + phonenumber); }
+            else { _calculatorPageObject.StateSwishnumber("+46" + phonenumber); }
+           
 
             _calculatorPageObject.ClickBetalaSwish();
         }

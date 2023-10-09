@@ -19,7 +19,7 @@ namespace SpecFlowProject1.StepDefinitions
     public class SwishtestStepDefinitions
 
     {
-
+        public string browsertype;
         public string filledSwishPaymentReference;
 
         public string password;
@@ -44,24 +44,21 @@ namespace SpecFlowProject1.StepDefinitions
 
         public CalculatorPageObject _calculatorPageObject;
 
-        public SwishtestStepDefinitions(BrowserDriver browserDriver)
-
-        {
-
-            _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
-
+        //public SwishtestStepDefinitions(BrowserDriver browserDriver)
+        //{
+            SwishtestStepDefinitions(BrowserDriverMozilla browserDriverMozilla)
+        { 
+               // _calculatorPageObject = new CalculatorPageObject(browserDriver.Current);
+            _calculatorPageObject = new CalculatorPageObject(browserDriverMozilla.Current);
+            browsertype = "mozilla";
+            //browsertype = "chrome";
             // The tester should modify the parameters below to suit the test.
 
             password = "Koopa11Kiipa";//User password
-
             phonenumber = "730622401";//User phone
-
             bookQRcode = "eebe74a8-56ce-4e10-a8a2-6e4f6ef6c8cd";
-
             amount = "1";
-
             bookID = "6c6d0395-c667-4bf9-b5f5-0d13ca706b27"; //The book QR code number  
-
             averagePrice = "1";
 
             averagePricePlusExtra = "1";
@@ -120,7 +117,9 @@ namespace SpecFlowProject1.StepDefinitions
 
             //The phone number is filled in (Altough is hould already be autofilled) an the "Betala" is clicked.
 
-            _calculatorPageObject.StateSwishnumber("+46" + phonenumber);
+            if (browsertype == "mozilla")
+            { _calculatorPageObject.StateSwishnumber("46" + phonenumber); }
+            else { _calculatorPageObject.StateSwishnumber("+46" + phonenumber); };
 
             _calculatorPageObject.ClickBetalaSwish();
 

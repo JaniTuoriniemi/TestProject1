@@ -2,13 +2,14 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Interactions;
 
 namespace CalculatorSelenium.Specs.Drivers
 {
     /// <summary>
     /// Manages a browser instance using Selenium
     /// </summary>
-    public class BrowserDriver //: IDisposable
+    public class BrowserDriver : IDisposable// Comment away IDisposable to not close browser after test
     {
         private readonly Lazy<IWebDriver> _currentWebDriverLazy;
         private bool _isDisposed;
@@ -34,7 +35,7 @@ namespace CalculatorSelenium.Specs.Drivers
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
 
             var chromeOptions = new ChromeOptions();
-
+           // chromeOptions.AddArgument("--headless=new");//Comment away this line to make browser visible
             var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
 
             return chromeDriver;
@@ -57,7 +58,7 @@ namespace CalculatorSelenium.Specs.Drivers
             _isDisposed = true;
         }
     }
-        public class BrowserDriverMozilla //: IDisposable
+        public class BrowserDriverMozilla : IDisposable// Comment away IDisposable to not close browser after test
         {
             private readonly Lazy<IWebDriver> _currentWebDriverLazy;
             private bool _isDisposed;
@@ -82,7 +83,7 @@ namespace CalculatorSelenium.Specs.Drivers
             var firefoxDriverService = FirefoxDriverService.CreateDefaultService();
 
             var firefoxOptions = new FirefoxOptions();
-
+            firefoxOptions.AddArgument("--headless=new");//Comment away this line to make browser visible
             var firefoxDriver = new FirefoxDriver(firefoxDriverService, firefoxOptions);
 
             return firefoxDriver;
